@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  wallet:
+    build: .
+    command: ./bin/server serve
+    ports: 
+      - 8080:8080
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
