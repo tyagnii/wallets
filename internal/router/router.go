@@ -1,7 +1,10 @@
 package router
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
+	"github.com/tyagnii/wallets/config"
 	"github.com/tyagnii/wallets/internal/handlers"
 )
 
@@ -9,12 +12,17 @@ import (
 func NewRouter() *gin.Engine {
 
 	// add error handling
-	h, _ := handlers.NewHandler()
+	h, err := handlers.NewHandler()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(config.ConnectionString)
 
 	r := gin.Default()
 
 	r.POST("/api/v1/wallet", h.PostAmount)
 	r.GET("/api/v1/wallets/:UUID", h.GetWalletBalance)
+	r.POST("/api/v1/wallets/create", h.CreateWallet)
 
 	return r
 }

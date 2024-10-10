@@ -3,8 +3,11 @@ package db
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/tyagnii/wallets/gen/ent"
 	"github.com/tyagnii/wallets/gen/ent/wallet"
+
+	_ "github.com/lib/pq"
 )
 
 type Connector struct {
@@ -12,9 +15,11 @@ type Connector struct {
 }
 
 // CreateWallet returns wallet UUID
-func (c *Connector) CreateWallet(ctx context.Context) (uuid string, err error) {
+func (c *Connector) CreateWallet(ctx context.Context) (id string, err error) {
+	uid := uuid.New()
+	id = uid.String()
 	w, err := c.Wallet.Create().
-		SetUUID(uuid).Save(ctx)
+		SetUUID(id).Save(ctx)
 	if err != nil {
 		return "", err
 	}

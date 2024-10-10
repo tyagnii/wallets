@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 
+	"github.com/tyagnii/wallets/config"
 	"github.com/tyagnii/wallets/gen/ent"
 	"github.com/tyagnii/wallets/internal/db"
 )
@@ -18,7 +19,7 @@ type PostAmountRequest struct {
 }
 
 func NewHandler() (Handler, error) {
-	conn, err := ent.Open("postgres", db.ConnectionString)
+	conn, err := ent.Open("postgres", config.ConnectionString)
 	if err != nil {
 		fmt.Println("ERROR due create handler", err)
 	}

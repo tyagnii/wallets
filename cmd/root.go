@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/tyagnii/wallets/config"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -28,6 +29,10 @@ to quickly create a Cobra application.`,
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
+	if err != nil {
+		os.Exit(1)
+	}
+	_, err = config.ReadConfig()
 	if err != nil {
 		os.Exit(1)
 	}
