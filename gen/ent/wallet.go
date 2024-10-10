@@ -18,8 +18,8 @@ type Wallet struct {
 	ID int `json:"id,omitempty"`
 	// UUID holds the value of the "UUID" field.
 	UUID string `json:"UUID,omitempty"`
-	// Amount holds the value of the "amount" field.
-	Amount       int `json:"amount,omitempty"`
+	// Balance holds the value of the "balance" field.
+	Balance      int `json:"balance,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -28,7 +28,7 @@ func (*Wallet) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case wallet.FieldID, wallet.FieldAmount:
+		case wallet.FieldID, wallet.FieldBalance:
 			values[i] = new(sql.NullInt64)
 		case wallet.FieldUUID:
 			values[i] = new(sql.NullString)
@@ -59,11 +59,11 @@ func (w *Wallet) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				w.UUID = value.String
 			}
-		case wallet.FieldAmount:
+		case wallet.FieldBalance:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field amount", values[i])
+				return fmt.Errorf("unexpected type %T for field balance", values[i])
 			} else if value.Valid {
-				w.Amount = int(value.Int64)
+				w.Balance = int(value.Int64)
 			}
 		default:
 			w.selectValues.Set(columns[i], values[i])
@@ -104,8 +104,8 @@ func (w *Wallet) String() string {
 	builder.WriteString("UUID=")
 	builder.WriteString(w.UUID)
 	builder.WriteString(", ")
-	builder.WriteString("amount=")
-	builder.WriteString(fmt.Sprintf("%v", w.Amount))
+	builder.WriteString("balance=")
+	builder.WriteString(fmt.Sprintf("%v", w.Balance))
 	builder.WriteByte(')')
 	return builder.String()
 }

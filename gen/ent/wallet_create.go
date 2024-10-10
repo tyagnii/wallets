@@ -25,16 +25,16 @@ func (wc *WalletCreate) SetUUID(s string) *WalletCreate {
 	return wc
 }
 
-// SetAmount sets the "amount" field.
-func (wc *WalletCreate) SetAmount(i int) *WalletCreate {
-	wc.mutation.SetAmount(i)
+// SetBalance sets the "balance" field.
+func (wc *WalletCreate) SetBalance(i int) *WalletCreate {
+	wc.mutation.SetBalance(i)
 	return wc
 }
 
-// SetNillableAmount sets the "amount" field if the given value is not nil.
-func (wc *WalletCreate) SetNillableAmount(i *int) *WalletCreate {
+// SetNillableBalance sets the "balance" field if the given value is not nil.
+func (wc *WalletCreate) SetNillableBalance(i *int) *WalletCreate {
 	if i != nil {
-		wc.SetAmount(*i)
+		wc.SetBalance(*i)
 	}
 	return wc
 }
@@ -74,9 +74,9 @@ func (wc *WalletCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (wc *WalletCreate) defaults() {
-	if _, ok := wc.mutation.Amount(); !ok {
-		v := wallet.DefaultAmount
-		wc.mutation.SetAmount(v)
+	if _, ok := wc.mutation.Balance(); !ok {
+		v := wallet.DefaultBalance
+		wc.mutation.SetBalance(v)
 	}
 }
 
@@ -90,8 +90,8 @@ func (wc *WalletCreate) check() error {
 			return &ValidationError{Name: "UUID", err: fmt.Errorf(`ent: validator failed for field "Wallet.UUID": %w`, err)}
 		}
 	}
-	if _, ok := wc.mutation.Amount(); !ok {
-		return &ValidationError{Name: "amount", err: errors.New(`ent: missing required field "Wallet.amount"`)}
+	if _, ok := wc.mutation.Balance(); !ok {
+		return &ValidationError{Name: "balance", err: errors.New(`ent: missing required field "Wallet.balance"`)}
 	}
 	return nil
 }
@@ -123,9 +123,9 @@ func (wc *WalletCreate) createSpec() (*Wallet, *sqlgraph.CreateSpec) {
 		_spec.SetField(wallet.FieldUUID, field.TypeString, value)
 		_node.UUID = value
 	}
-	if value, ok := wc.mutation.Amount(); ok {
-		_spec.SetField(wallet.FieldAmount, field.TypeInt, value)
-		_node.Amount = value
+	if value, ok := wc.mutation.Balance(); ok {
+		_spec.SetField(wallet.FieldBalance, field.TypeInt, value)
+		_node.Balance = value
 	}
 	return _node, _spec
 }

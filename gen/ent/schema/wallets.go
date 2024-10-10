@@ -14,7 +14,7 @@ func (Wallet) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("UUID").
 			NotEmpty().Unique(),
-		field.Int("amount").
+		field.Int("balance").
 			Default(0),
 	}
 }

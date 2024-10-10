@@ -33,8 +33,8 @@ type WalletMutation struct {
 	typ           string
 	id            *int
 	_UUID         *string
-	amount        *int
-	addamount     *int
+	balance       *int
+	addbalance    *int
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Wallet, error)
@@ -175,60 +175,60 @@ func (m *WalletMutation) ResetUUID() {
 	m._UUID = nil
 }
 
-// SetAmount sets the "amount" field.
-func (m *WalletMutation) SetAmount(i int) {
-	m.amount = &i
-	m.addamount = nil
+// SetBalance sets the "balance" field.
+func (m *WalletMutation) SetBalance(i int) {
+	m.balance = &i
+	m.addbalance = nil
 }
 
-// Amount returns the value of the "amount" field in the mutation.
-func (m *WalletMutation) Amount() (r int, exists bool) {
-	v := m.amount
+// Balance returns the value of the "balance" field in the mutation.
+func (m *WalletMutation) Balance() (r int, exists bool) {
+	v := m.balance
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldAmount returns the old "amount" field's value of the Wallet entity.
+// OldBalance returns the old "balance" field's value of the Wallet entity.
 // If the Wallet object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *WalletMutation) OldAmount(ctx context.Context) (v int, err error) {
+func (m *WalletMutation) OldBalance(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldAmount is only allowed on UpdateOne operations")
+		return v, errors.New("OldBalance is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldAmount requires an ID field in the mutation")
+		return v, errors.New("OldBalance requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAmount: %w", err)
+		return v, fmt.Errorf("querying old value for OldBalance: %w", err)
 	}
-	return oldValue.Amount, nil
+	return oldValue.Balance, nil
 }
 
-// AddAmount adds i to the "amount" field.
-func (m *WalletMutation) AddAmount(i int) {
-	if m.addamount != nil {
-		*m.addamount += i
+// AddBalance adds i to the "balance" field.
+func (m *WalletMutation) AddBalance(i int) {
+	if m.addbalance != nil {
+		*m.addbalance += i
 	} else {
-		m.addamount = &i
+		m.addbalance = &i
 	}
 }
 
-// AddedAmount returns the value that was added to the "amount" field in this mutation.
-func (m *WalletMutation) AddedAmount() (r int, exists bool) {
-	v := m.addamount
+// AddedBalance returns the value that was added to the "balance" field in this mutation.
+func (m *WalletMutation) AddedBalance() (r int, exists bool) {
+	v := m.addbalance
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetAmount resets all changes to the "amount" field.
-func (m *WalletMutation) ResetAmount() {
-	m.amount = nil
-	m.addamount = nil
+// ResetBalance resets all changes to the "balance" field.
+func (m *WalletMutation) ResetBalance() {
+	m.balance = nil
+	m.addbalance = nil
 }
 
 // Where appends a list predicates to the WalletMutation builder.
@@ -269,8 +269,8 @@ func (m *WalletMutation) Fields() []string {
 	if m._UUID != nil {
 		fields = append(fields, wallet.FieldUUID)
 	}
-	if m.amount != nil {
-		fields = append(fields, wallet.FieldAmount)
+	if m.balance != nil {
+		fields = append(fields, wallet.FieldBalance)
 	}
 	return fields
 }
@@ -282,8 +282,8 @@ func (m *WalletMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case wallet.FieldUUID:
 		return m.UUID()
-	case wallet.FieldAmount:
-		return m.Amount()
+	case wallet.FieldBalance:
+		return m.Balance()
 	}
 	return nil, false
 }
@@ -295,8 +295,8 @@ func (m *WalletMutation) OldField(ctx context.Context, name string) (ent.Value, 
 	switch name {
 	case wallet.FieldUUID:
 		return m.OldUUID(ctx)
-	case wallet.FieldAmount:
-		return m.OldAmount(ctx)
+	case wallet.FieldBalance:
+		return m.OldBalance(ctx)
 	}
 	return nil, fmt.Errorf("unknown Wallet field %s", name)
 }
@@ -313,12 +313,12 @@ func (m *WalletMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUUID(v)
 		return nil
-	case wallet.FieldAmount:
+	case wallet.FieldBalance:
 		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetAmount(v)
+		m.SetBalance(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Wallet field %s", name)
@@ -328,8 +328,8 @@ func (m *WalletMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *WalletMutation) AddedFields() []string {
 	var fields []string
-	if m.addamount != nil {
-		fields = append(fields, wallet.FieldAmount)
+	if m.addbalance != nil {
+		fields = append(fields, wallet.FieldBalance)
 	}
 	return fields
 }
@@ -339,8 +339,8 @@ func (m *WalletMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *WalletMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case wallet.FieldAmount:
-		return m.AddedAmount()
+	case wallet.FieldBalance:
+		return m.AddedBalance()
 	}
 	return nil, false
 }
@@ -350,12 +350,12 @@ func (m *WalletMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *WalletMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case wallet.FieldAmount:
+	case wallet.FieldBalance:
 		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddAmount(v)
+		m.AddBalance(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Wallet numeric field %s", name)
@@ -387,8 +387,8 @@ func (m *WalletMutation) ResetField(name string) error {
 	case wallet.FieldUUID:
 		m.ResetUUID()
 		return nil
-	case wallet.FieldAmount:
-		m.ResetAmount()
+	case wallet.FieldBalance:
+		m.ResetBalance()
 		return nil
 	}
 	return fmt.Errorf("unknown Wallet field %s", name)

@@ -17,8 +17,8 @@ func init() {
 	walletDescUUID := walletFields[0].Descriptor()
 	// wallet.UUIDValidator is a validator for the "UUID" field. It is called by the builders before save.
 	wallet.UUIDValidator = walletDescUUID.Validators[0].(func(string) error)
-	// walletDescAmount is the schema descriptor for amount field.
-	walletDescAmount := walletFields[1].Descriptor()
-	// wallet.DefaultAmount holds the default value on creation for the amount field.
-	wallet.DefaultAmount = walletDescAmount.Default.(int)
+	// walletDescBalance is the schema descriptor for balance field.
+	walletDescBalance := walletFields[1].Descriptor()
+	// wallet.DefaultBalance holds the default value on creation for the balance field.
+	wallet.DefaultBalance = walletDescBalance.Default.(int)
 }

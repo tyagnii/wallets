@@ -12,7 +12,7 @@ var (
 	WalletsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "uuid", Type: field.TypeString, Unique: true},
-		{Name: "amount", Type: field.TypeInt, Default: 0},
+		{Name: "balance", Type: field.TypeInt, Default: 0},
 	}
 	// WalletsTable holds the schema information for the "wallets" table.
 	WalletsTable = &schema.Table{

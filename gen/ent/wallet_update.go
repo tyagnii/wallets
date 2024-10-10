@@ -41,24 +41,24 @@ func (wu *WalletUpdate) SetNillableUUID(s *string) *WalletUpdate {
 	return wu
 }
 
-// SetAmount sets the "amount" field.
-func (wu *WalletUpdate) SetAmount(i int) *WalletUpdate {
-	wu.mutation.ResetAmount()
-	wu.mutation.SetAmount(i)
+// SetBalance sets the "balance" field.
+func (wu *WalletUpdate) SetBalance(i int) *WalletUpdate {
+	wu.mutation.ResetBalance()
+	wu.mutation.SetBalance(i)
 	return wu
 }
 
-// SetNillableAmount sets the "amount" field if the given value is not nil.
-func (wu *WalletUpdate) SetNillableAmount(i *int) *WalletUpdate {
+// SetNillableBalance sets the "balance" field if the given value is not nil.
+func (wu *WalletUpdate) SetNillableBalance(i *int) *WalletUpdate {
 	if i != nil {
-		wu.SetAmount(*i)
+		wu.SetBalance(*i)
 	}
 	return wu
 }
 
-// AddAmount adds i to the "amount" field.
-func (wu *WalletUpdate) AddAmount(i int) *WalletUpdate {
-	wu.mutation.AddAmount(i)
+// AddBalance adds i to the "balance" field.
+func (wu *WalletUpdate) AddBalance(i int) *WalletUpdate {
+	wu.mutation.AddBalance(i)
 	return wu
 }
 
@@ -119,11 +119,11 @@ func (wu *WalletUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := wu.mutation.UUID(); ok {
 		_spec.SetField(wallet.FieldUUID, field.TypeString, value)
 	}
-	if value, ok := wu.mutation.Amount(); ok {
-		_spec.SetField(wallet.FieldAmount, field.TypeInt, value)
+	if value, ok := wu.mutation.Balance(); ok {
+		_spec.SetField(wallet.FieldBalance, field.TypeInt, value)
 	}
-	if value, ok := wu.mutation.AddedAmount(); ok {
-		_spec.AddField(wallet.FieldAmount, field.TypeInt, value)
+	if value, ok := wu.mutation.AddedBalance(); ok {
+		_spec.AddField(wallet.FieldBalance, field.TypeInt, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, wu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -159,24 +159,24 @@ func (wuo *WalletUpdateOne) SetNillableUUID(s *string) *WalletUpdateOne {
 	return wuo
 }
 
-// SetAmount sets the "amount" field.
-func (wuo *WalletUpdateOne) SetAmount(i int) *WalletUpdateOne {
-	wuo.mutation.ResetAmount()
-	wuo.mutation.SetAmount(i)
+// SetBalance sets the "balance" field.
+func (wuo *WalletUpdateOne) SetBalance(i int) *WalletUpdateOne {
+	wuo.mutation.ResetBalance()
+	wuo.mutation.SetBalance(i)
 	return wuo
 }
 
-// SetNillableAmount sets the "amount" field if the given value is not nil.
-func (wuo *WalletUpdateOne) SetNillableAmount(i *int) *WalletUpdateOne {
+// SetNillableBalance sets the "balance" field if the given value is not nil.
+func (wuo *WalletUpdateOne) SetNillableBalance(i *int) *WalletUpdateOne {
 	if i != nil {
-		wuo.SetAmount(*i)
+		wuo.SetBalance(*i)
 	}
 	return wuo
 }
 
-// AddAmount adds i to the "amount" field.
-func (wuo *WalletUpdateOne) AddAmount(i int) *WalletUpdateOne {
-	wuo.mutation.AddAmount(i)
+// AddBalance adds i to the "balance" field.
+func (wuo *WalletUpdateOne) AddBalance(i int) *WalletUpdateOne {
+	wuo.mutation.AddBalance(i)
 	return wuo
 }
 
@@ -267,11 +267,11 @@ func (wuo *WalletUpdateOne) sqlSave(ctx context.Context) (_node *Wallet, err err
 	if value, ok := wuo.mutation.UUID(); ok {
 		_spec.SetField(wallet.FieldUUID, field.TypeString, value)
 	}
-	if value, ok := wuo.mutation.Amount(); ok {
-		_spec.SetField(wallet.FieldAmount, field.TypeInt, value)
+	if value, ok := wuo.mutation.Balance(); ok {
+		_spec.SetField(wallet.FieldBalance, field.TypeInt, value)
 	}
-	if value, ok := wuo.mutation.AddedAmount(); ok {
-		_spec.AddField(wallet.FieldAmount, field.TypeInt, value)
+	if value, ok := wuo.mutation.AddedBalance(); ok {
+		_spec.AddField(wallet.FieldBalance, field.TypeInt, value)
 	}
 	_node = &Wallet{config: wuo.config}
 	_spec.Assign = _node.assignValues

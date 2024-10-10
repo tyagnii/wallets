@@ -13,8 +13,8 @@ const (
 	FieldID = "id"
 	// FieldUUID holds the string denoting the uuid field in the database.
 	FieldUUID = "uuid"
-	// FieldAmount holds the string denoting the amount field in the database.
-	FieldAmount = "amount"
+	// FieldBalance holds the string denoting the balance field in the database.
+	FieldBalance = "balance"
 	// Table holds the table name of the wallet in the database.
 	Table = "wallets"
 )
@@ -23,7 +23,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldUUID,
-	FieldAmount,
+	FieldBalance,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -39,8 +39,8 @@ func ValidColumn(column string) bool {
 var (
 	// UUIDValidator is a validator for the "UUID" field. It is called by the builders before save.
 	UUIDValidator func(string) error
-	// DefaultAmount holds the default value on creation for the "amount" field.
-	DefaultAmount int
+	// DefaultBalance holds the default value on creation for the "balance" field.
+	DefaultBalance int
 )
 
 // OrderOption defines the ordering options for the Wallet queries.
@@ -56,7 +56,7 @@ func ByUUID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUUID, opts...).ToFunc()
 }
 
-// ByAmount orders the results by the amount field.
-func ByAmount(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAmount, opts...).ToFunc()
+// ByBalance orders the results by the balance field.
+func ByBalance(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldBalance, opts...).ToFunc()
 }

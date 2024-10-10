@@ -57,9 +57,9 @@ func UUID(v string) predicate.Wallet {
 	return predicate.Wallet(sql.FieldEQ(FieldUUID, v))
 }
 
-// Amount applies equality check predicate on the "amount" field. It's identical to AmountEQ.
-func Amount(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldEQ(FieldAmount, v))
+// Balance applies equality check predicate on the "balance" field. It's identical to BalanceEQ.
+func Balance(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldEQ(FieldBalance, v))
 }
 
 // UUIDEQ applies the EQ predicate on the "UUID" field.
@@ -127,44 +127,44 @@ func UUIDContainsFold(v string) predicate.Wallet {
 	return predicate.Wallet(sql.FieldContainsFold(FieldUUID, v))
 }
 
-// AmountEQ applies the EQ predicate on the "amount" field.
-func AmountEQ(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldEQ(FieldAmount, v))
+// BalanceEQ applies the EQ predicate on the "balance" field.
+func BalanceEQ(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldEQ(FieldBalance, v))
 }
 
-// AmountNEQ applies the NEQ predicate on the "amount" field.
-func AmountNEQ(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldNEQ(FieldAmount, v))
+// BalanceNEQ applies the NEQ predicate on the "balance" field.
+func BalanceNEQ(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldNEQ(FieldBalance, v))
 }
 
-// AmountIn applies the In predicate on the "amount" field.
-func AmountIn(vs ...int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldIn(FieldAmount, vs...))
+// BalanceIn applies the In predicate on the "balance" field.
+func BalanceIn(vs ...int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldIn(FieldBalance, vs...))
 }
 
-// AmountNotIn applies the NotIn predicate on the "amount" field.
-func AmountNotIn(vs ...int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldNotIn(FieldAmount, vs...))
+// BalanceNotIn applies the NotIn predicate on the "balance" field.
+func BalanceNotIn(vs ...int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldNotIn(FieldBalance, vs...))
 }
 
-// AmountGT applies the GT predicate on the "amount" field.
-func AmountGT(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldGT(FieldAmount, v))
+// BalanceGT applies the GT predicate on the "balance" field.
+func BalanceGT(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldGT(FieldBalance, v))
 }
 
-// AmountGTE applies the GTE predicate on the "amount" field.
-func AmountGTE(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldGTE(FieldAmount, v))
+// BalanceGTE applies the GTE predicate on the "balance" field.
+func BalanceGTE(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldGTE(FieldBalance, v))
 }
 
-// AmountLT applies the LT predicate on the "amount" field.
-func AmountLT(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldLT(FieldAmount, v))
+// BalanceLT applies the LT predicate on the "balance" field.
+func BalanceLT(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldLT(FieldBalance, v))
 }
 
-// AmountLTE applies the LTE predicate on the "amount" field.
-func AmountLTE(v int) predicate.Wallet {
-	return predicate.Wallet(sql.FieldLTE(FieldAmount, v))
+// BalanceLTE applies the LTE predicate on the "balance" field.
+func BalanceLTE(v int) predicate.Wallet {
+	return predicate.Wallet(sql.FieldLTE(FieldBalance, v))
 }
 
 // And groups predicates with the AND operator between them.
