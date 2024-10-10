@@ -23,6 +23,8 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("serve called")
 
+		// read params
+
 		r := router.NewRouter()
 		r.Run()
 	},

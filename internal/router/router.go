@@ -8,10 +8,13 @@ import (
 // NewRouter creates http server with default options
 func NewRouter() *gin.Engine {
 
+	// add error handling
+	h, _ := handlers.NewHandler()
+
 	r := gin.Default()
 
-	r.POST("/api/v1/wallet", handlers.PostAmount)
-	r.GET("/api/v1/wallets/:UUID", handlers.GetWalletBalance)
+	r.POST("/api/v1/wallet", h.PostAmount)
+	r.GET("/api/v1/wallets/:UUID", h.GetWalletBalance)
 
 	return r
 }
