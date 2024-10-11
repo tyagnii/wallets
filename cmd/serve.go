@@ -5,8 +5,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/tyagnii/wallets/config"
+	"github.com/tyagnii/wallets/internal/db"
 	"github.com/tyagnii/wallets/internal/router"
 )
 
@@ -24,6 +27,17 @@ to quickly create a Cobra application.`,
 		fmt.Println("serve called")
 
 		// read params
+		_, err := config.ReadConfig()
+		if err != nil {
+			os.Exit(1)
+		}
+
+		err = db.InitDBSchema()
+		if err != nil {
+			err = fmt.Errorf("InitDB error: %w", err)
+			fmt.Println(err)
+			os.Exit(1)
+		}
 
 		r := router.NewRouter()
 		r.Run()

@@ -1,10 +1,7 @@
 package router
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
-	"github.com/tyagnii/wallets/config"
 	"github.com/tyagnii/wallets/internal/handlers"
 )
 
@@ -16,7 +13,6 @@ func NewRouter() *gin.Engine {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(config.ConnectionString)
 
 	r := gin.Default()
 

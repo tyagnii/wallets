@@ -9,12 +9,12 @@ import (
 )
 
 type Environment struct {
-	DBHostName       string
-	DBUser           string
-	DBPassword       string
-	DBName           string
-	DBConnectionMode string
-	DBPort           string
+	DBHostName string
+	DBUser     string
+	DBPassword string
+	DBName     string
+	DBSSLMode  string
+	DBPort     string
 }
 
 var Env Environment
@@ -31,16 +31,14 @@ func ReadConfig() (Environment, error) {
 	Env.DBPassword, _ = os.LookupEnv("PGPASSWORD")
 	Env.DBPort, _ = os.LookupEnv("PGPORT")
 	Env.DBName, _ = os.LookupEnv("PGDATABASE")
-	Env.DBConnectionMode, _ = os.LookupEnv("PGSSLMODE")
+	Env.DBSSLMode, _ = os.LookupEnv("PGSSLMODE")
 
 	// client, err := ent.Open("postgres","host=<host> port=<port> user=<user> dbname=<database> password=<pass>")
-	ConnectionString = fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
+	ConnectionString = fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s",
 		Env.DBHostName,
 		Env.DBPort,
 		Env.DBUser,
 		Env.DBName,
-		Env.DBPassword,
-		Env.DBConnectionMode)
-
+		Env.DBPassword)
 	return Env, nil
 }
