@@ -11,7 +11,7 @@ import (
 	"github.com/tyagnii/wallets/gen/ent"
 )
 
-var dbc Connector
+var dbc PGConnector
 
 // up docker for integration tests
 // docker run --name postgres -e POSTGRES_PASSWORD=password -d postgres
@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 		fmt.Printf("error during connecting to db: %s", err.Error())
 	}
 
-	dbc = Connector{Client: entc}
+	dbc = PGConnector{Client: entc}
 
 	code := m.Run()
 

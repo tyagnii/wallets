@@ -11,12 +11,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type Connector struct {
+type PGConnector struct {
 	*ent.Client
 }
 
 // CreateWallet returns wallet UUID
-func (c *Connector) CreateWallet(ctx context.Context) (id string, err error) {
+func (c PGConnector) CreateWallet(ctx context.Context) (id string, err error) {
 	uid := uuid.New()
 	id = uid.String()
 	w, err := c.Wallet.Create().
@@ -29,7 +29,7 @@ func (c *Connector) CreateWallet(ctx context.Context) (id string, err error) {
 }
 
 // GetWalletBalance returns current wallet balance
-func (c *Connector) GetWalletBalance(ctx context.Context, uuid string) (balance int, err error) {
+func (c PGConnector) GetWalletBalance(ctx context.Context, uuid string) (balance int, err error) {
 	w, err := c.Wallet.Query().
 		Where(wallet.UUIDEQ(uuid)).
 		First(ctx)
@@ -41,7 +41,7 @@ func (c *Connector) GetWalletBalance(ctx context.Context, uuid string) (balance 
 }
 
 // ChangeWalletBalance adds or subtract some amount from wallet
-func (c *Connector) ChangeWalletBalance(ctx context.Context, uuid string, op string, amount int) (balance int, err error) {
+func (c PGConnector) ChangeWalletBalance(ctx context.Context, uuid string, op string, amount int) (balance int, err error) {
 	w, err := c.Wallet.Query().
 		Where(wallet.UUIDEQ(uuid)).First(ctx)
 	if err != nil {
