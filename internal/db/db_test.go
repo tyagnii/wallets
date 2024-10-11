@@ -13,7 +13,7 @@ import (
 
 var dbc Connector
 
-// docker
+// up docker for integration tests
 // docker run --name postgres -e POSTGRES_PASSWORD=password -d postgres
 func TestMain(m *testing.M) {
 	config.ConnectionString = "host=127.0.0.1 port=5432 user=postgres password=password sslmode=disable"
@@ -34,6 +34,38 @@ func TestMain(m *testing.M) {
 
 	os.Exit(code)
 
+}
+
+// Tests
+func TestWallet(t *testing.T) {
+	c := context.Background()
+
+	// CreateWallet
+	id, err := dbc.CreateWallet(c)
+	require.NoError(t, err)
+
+	// Wallet Balance
+	b, err := dbc.GetWalletBalance(c, id)
+	require.NoError(t, err)
+	if b != 0 {
+		t.Errorf("Default balance should be 0")
+	}
+
+	// Add v to wallet
+	v := 100
+	b, err = dbc.ChangeWalletBalance(c, id, "DEPOSIT", v)
+	require.NoError(t, err)
+	if b != 100 {
+		t.Errorf("Your math is bad %d != %d", b, v)
+	}
+
+	// Withdraw
+	v = 50
+	b, err = dbc.ChangeWalletBalance(c, id, "WITHDRAW", v)
+	require.NoError(t, err)
+	if b != 50 {
+		t.Errorf("Your math is bad %d != %d", b, v)
+	}
 }
 
 // Benchmarks
