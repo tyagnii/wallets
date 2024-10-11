@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/tyagnii/wallets/gen/ent"
@@ -40,16 +41,29 @@ func (c *Connector) GetWalletBalance(ctx context.Context, uuid string) (balance 
 }
 
 // ChangeWalletBalance adds or subtract some amount from wallet
-func (c *Connector) ChangeWalletBalance(ctx context.Context, uuid string, amount int) (balance int, err error) {
+func (c *Connector) ChangeWalletBalance(ctx context.Context, uuid string, op string, amount int) (balance int, err error) {
 	w, err := c.Wallet.Query().
 		Where(wallet.UUIDEQ(uuid)).First(ctx)
 	if err != nil {
 		return 0, err
 	}
 
-	w, err = w.Update().SetBalance(w.Balance + amount).Save(ctx)
-	if err != nil {
-		return 0, err
+	switch op {
+	case "DEPOSIT":
+		w, err = w.Update().SetBalance(w.Balance + amount).Save(ctx)
+		if err != nil {
+			return 0, err
+		}
+	case "WITHDRAW":
+		if w.Balance < amount {
+			return 0, fmt.Errorf("insufficient funds")
+		}
+		w, err = w.Update().SetBalance(w.Balance - amount).Save(ctx)
+		if err != nil {
+			return 0, err
+		}
+	default:
+		return 0, fmt.Errorf("unsupported wallet operation")
 	}
 
 	return w.Balance, nil

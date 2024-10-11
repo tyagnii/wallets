@@ -20,7 +20,7 @@ func (h *Handler) PostAmount(c *gin.Context) {
 		return
 	}
 
-	_, err = h.dbConnector.ChangeWalletBalance(c, pr.WalletID, a)
+	_, err = h.dbConnector.ChangeWalletBalance(c, pr.WalletID, pr.OperationType, a)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return
