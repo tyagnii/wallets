@@ -1,18 +1,11 @@
-package router
+package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/tyagnii/wallets/internal/handlers"
 )
 
 // NewRouter creates http server with default options
-func NewRouter() *gin.Engine {
-
-	// add error handling
-	h, err := handlers.NewHandler()
-	if err != nil {
-		panic(err)
-	}
+func NewRouter(h Handler) *gin.Engine {
 
 	r := gin.Default()
 

@@ -15,6 +15,17 @@ type PGConnector struct {
 	*ent.Client
 }
 
+// NewDBConnector returns PGconnector
+func NewDBConnector(dsn string) (DBConnector, error) {
+
+	conn, err := ent.Open("postgres", dsn)
+	if err != nil {
+		return nil, err
+	}
+
+	return PGConnector{Client: conn}, nil
+}
+
 // CreateWallet returns wallet UUID
 func (c PGConnector) CreateWallet(ctx context.Context) (id string, err error) {
 	uid := uuid.New()

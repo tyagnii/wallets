@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tyagnii/wallets/config"
 	"github.com/tyagnii/wallets/internal/db"
-	"github.com/tyagnii/wallets/internal/router"
+	"github.com/tyagnii/wallets/internal/handlers"
 )
 
 // serveCmd represents the serve command
@@ -32,14 +32,33 @@ to quickly create a Cobra application.`,
 			os.Exit(1)
 		}
 
+		// init db schema
 		err = db.InitDBSchema()
 		if err != nil {
-			err = fmt.Errorf("InitDB error: %w", err)
+			err = fmt.Errorf("serve error: %w", err)
 			fmt.Println(err)
 			os.Exit(1)
 		}
 
-		r := router.NewRouter()
+		// create pg connector
+		// keep conn string for testing purposes
+		conn, err := db.NewDBConnector(config.ConnectionString)
+		if err != nil {
+			err = fmt.Errorf("serve error: %w", err)
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		// create handler instance
+		h, err := handlers.NewHandler(conn)
+		if err != nil {
+			err = fmt.Errorf("serve error: %w", err)
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		// run router with handler created above
+		r := handlers.NewRouter(h)
 		r.Run()
 	},
 }
