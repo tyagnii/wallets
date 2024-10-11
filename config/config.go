@@ -14,12 +14,11 @@ type Environment struct {
 	DBPort     string
 }
 
-var Env Environment
 var ConnectionString string
 
 // ReadConfig reads environment variables from config.env file
-func ReadConfig() error {
-	if err := godotenv.Load("config.env"); err != nil {
+func ReadConfig(cfg string) error {
+	if err := godotenv.Load(cfg); err != nil {
 		return err
 	}
 

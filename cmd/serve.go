@@ -27,7 +27,7 @@ to quickly create a Cobra application.`,
 		fmt.Println("serve called")
 
 		// read params
-		err := config.ReadConfig()
+		err := config.ReadConfig("config.env")
 		if err != nil {
 			os.Exit(1)
 		}
